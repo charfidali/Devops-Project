@@ -9,8 +9,7 @@ pipeline {
     sonar_host = 'http://192.168.109.2:9000'
     sonar_project_key = 'Devops_Project'
  }
-
- stages {
+    stages {
 
     stages {
      stage('Checkout SCM') {
@@ -32,7 +31,7 @@ pipeline {
             sh 'mvn test '
           }
 
-          stash includes: '**', name: 'workspace'
+            stash includes: '**', name: 'workspace'
         }
       }
       stage('Sonar Tests') {
