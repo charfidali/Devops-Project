@@ -19,6 +19,7 @@ public class OperatorServiceImpl implements IOperatorService {
 	OperatorRepository operatorRepository;
 	@Override
 	public List<Operator> retrieveAllOperators() {
+
 		return (List<Operator>) operatorRepository.findAll();
 	}
 
@@ -35,6 +36,7 @@ public class OperatorServiceImpl implements IOperatorService {
 
 	@Override
 	public Operator updateOperator(Operator operator) {
+
 		return operatorRepository.save(operator);
 	}
 
@@ -42,5 +44,6 @@ public class OperatorServiceImpl implements IOperatorService {
 	public Operator retrieveOperator(Long id) {
 		return operatorRepository.findById(id).orElseThrow(() -> new NullPointerException("Operator not found"));
 	}
+
 
 }
