@@ -70,22 +70,7 @@ pipeline {
             stash includes: '**', name: 'workspace'
           }
         }
-        stage('dockerhub') {
-
-                steps {
-
-                dockerImage= docker.build (registry,"DevOps_Project/")
-                            docker.withRegistry('', registryCredential) {
-                           dockerImage.push("latest")
-                  script {
-                    sh 'docker run --network=host  -d --name devopsproject_container yb20/DevOps_Project   '
-                  }
-
-                  stash includes: '**', name: 'workspace'
-                }
-              }
-            }
-
+        
 
     }
 
