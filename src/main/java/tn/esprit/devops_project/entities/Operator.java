@@ -17,15 +17,13 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Operator implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long idOperateur;
+	int idOperateur;
 	String fname;
 	String lname;
 	String password;
@@ -33,6 +31,12 @@ public class Operator implements Serializable{
 	@JsonIgnore
 	Set<Invoice> invoices;
 
-    public Operator(int i, String kacem, String yedes, String s) {
-    }
+	public Operator() {
+	}
+
+	public Operator(int idOperateur ,String fname,String lname) {
+		this.fname = fname;
+		this.lname=lname;
+		this.idOperateur=idOperateur;
+	}
 }
