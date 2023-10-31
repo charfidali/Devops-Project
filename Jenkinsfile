@@ -8,12 +8,9 @@ pipeline {
     sonar_credentials = credentials('jenkins-user-sonar-laforge')
     sonar_host = 'http://192.168.109.2:9000'
     sonar_project_key = 'Devops_Project'
+ }
 
-
-
-  }
-
-  stages {
+ stages {
 
     stages {
      stage('Checkout SCM') {
