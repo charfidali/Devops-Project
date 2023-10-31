@@ -5,7 +5,7 @@ pipeline {
 
 
     environment {
-      sonar_credentials = credentials('jenkins-user-sonar-laforge')
+      sonar_credentials =''
       sonar_host = 'http://192.168.109.2:9000'
       sonar_project_key = 'Devops_Project'
    }
@@ -70,7 +70,7 @@ pipeline {
             stash includes: '**', name: 'workspace'
           }
         }
-        
+
 
     }
 
