@@ -59,5 +59,5 @@ pipeline {
         sh 'docker push yb20/spring-app'
       }
     }
-
+    }
 }
