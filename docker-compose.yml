@@ -1,0 +1,39 @@
+version: "3.4"
+
+#networks:
+#  meatmi_network_bridge:
+#    external: true
+networks:
+  network:
+    driver: bridge
+
+services:
+  dev_database:
+    container_name: mysql_container
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mount/dev/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    command: mysqld --sql_mode=""
+    networks:
+#      - meatmi_network_bridge
+      - network
+
+  adminDB:
+    container_name: adminDB_container
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - MYSQL_ROOT_PASSWORD=root
+    depends_on:
+      - dev_database
+    ports:
+      - 82:80
+    links:
+      - dev_database:dev_db
+    networks:
+#      - meatmi_network_bridge
+      - network

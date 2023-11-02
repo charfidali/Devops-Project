@@ -59,5 +59,16 @@ pipeline {
         sh 'docker push yb20/spring-app'
       }
     }
+
+    stage('Run Spring && MySQL Containers') {
+      steps {
+        script {
+          sh 'docker-compose up -d'
+          sh 'docker run --network=host  -d --name Devops_container yb20/spring-app'
+        }
+      }
     }
+
+  }
+
 }
