@@ -1,77 +1,63 @@
 pipeline {
+  agent any
 
-    agent any
+  stages {
+    stage('Cleaning the project') {
+      steps {
+        sh "mvn -B -DskipTests clean  "
+      }
+    }
 
+    stage('Artifact Construction') {
+      steps {
+        sh "mvn -B -DskipTests package "
+      }
+    }
 
+    stage('Unit Tests') {
+      steps {
+        sh "mvn test "
+      }
+    }
 
-    environment {
-      sonar_credentials =''
-      sonar_host = 'http://192.168.109.2:9000'
-      sonar_project_key = 'Devops_Project'
-   }
-      stages {
+    stage('Code Quality Check via SonarQube') {
+      steps {
 
-        stage('MAVEN build') {
+        sh "  mvn clean verify sonar:sonar \
+                -Dsonar.projectKey=Devops_Project \
+                -Dsonar.projectName='Devops_Project' \
+                -Dsonar.host.url=http://192.168.109.2:9000 \
+                -Dsonar.token=sqp_4a53db99b9ef5024ddd0425cd364f774b17aa9f4 "
+      }
+    }
 
-            steps {
-              script {
-                sh 'mvn compile '
-              }
+    stage('Publish to Nexus') {
+      steps {
 
-                stash includes: '**', name: 'workspace'
-            }
-          }
-        stage('MAVEN test') {
+        sh 'mvn deploy  -DskipTests'
 
-          steps {
-            script {
-              sh 'mvn test '
-            }
+      }
+    }
 
-              stash includes: '**', name: 'workspace'
-          }
+    stage('Build Docker Image') {
+      steps {
+        script {
+          sh 'docker build -t yb20/spring-app .'
         }
-        stage('Sonar Tests') {
+      }
+    }
 
-          steps {
-            script {
-              sh 'mvn sonar:sonar  \
-               -Dsonar.projectKey=$sonar_project_key \
-               -Dsonar.projectName=$sonar_project_key \
-               -Dsonar.host.url=$sonar_host \
-               -Dsonar.login=$sonar_credentials \
-               -Dsonar.tests.exclusions=**/test/** \
-               -Dsonar.language=java '
-            }
+    stage('login dockerhub') {
+      steps {
 
-            stash includes: '**', name: 'workspace'
-          }
-        }
+        sh 'docker login -u yb20 --password dockerhub'
+      }
+    }
 
-        stage('MAVEN package') {
-
-          steps {
-            script {
-              sh 'mvn clean -Dmaven.test.skip package  '
-            }
-
-            stash includes: '**', name: 'workspace'
-          }
-        }
-        stage('MAVEN deploy') {
-
-          steps {
-
-
-            script {
-              sh 'mvn deploy -Dmaven.test.skip   '
-            }
-
-            stash includes: '**', name: 'workspace'
-          }
-        }
-
-
+    stage('Push Docker Image') {
+      steps {
+        sh 'docker push yb20/spring-app'
+      }
     }
 
 }
