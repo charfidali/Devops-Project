@@ -1,23 +1,23 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Checkout SCM') {
+        stage('Cleaning the project') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'stockTetst']],  // Replace with your branch name
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/yossrb/Devops-Project23-24.git',
-                    ]]
-                ])
+                sh "mvn -B -DskipTests clean"
             }
         }
-
-        stage('Build and Test') {
+        
+        stage('Unit Tests') {
+            steps {
+                sh "mvn test"
+            }
+        }
+        
+        stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'mvn clean test'
+                    sh 'docker build -t yb20/spring-app .'
                 }
             }
         }
