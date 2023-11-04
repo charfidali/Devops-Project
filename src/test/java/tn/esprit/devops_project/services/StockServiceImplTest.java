@@ -17,9 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
-public class StockServiceImplTest {
-
+class StockServiceImplTest {
     @InjectMocks
     private StockServiceImpl stockService;
 
@@ -68,4 +66,5 @@ public class StockServiceImplTest {
         assertEquals(2, retrievedStockList.size());
 
     }
+  
 }
