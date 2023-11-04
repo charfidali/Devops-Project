@@ -1,24 +1,41 @@
 pipeline {
     agent any
-    
+
     stages {
-        stage('Cleaning the project') {
+        stage('Git Checkout') {
             steps {
-                sh "mvn -B -DskipTests clean"
+
+                checkout scm
             }
         }
-        
-        stage('Unit Tests') {
+
+        stage('Compilation') {
             steps {
-                sh "mvn test"
+
+                sh 'mvn compile'
             }
         }
-        
-        stage('Build Docker Image') {
+
+        stage('SonarQube Analysis') {
+            environment {
+                sonar_credentials = credentials('jenkins-user-sonar-laforge')
+                sonar_host = 'http://192.168.109.2:9000'
+                sonar_project_key = 'Devops_Project'
+            }
             steps {
-                script {
-                    sh 'docker build -t yb20/spring-app .'
-                }
+                // Run SonarQube analysis
+                sh 'mvn sonar:sonar \
+                    -Dsonar.projectKey=$sonar_project_key \
+                    -Dsonar.projectName=$sonar_project_key \
+                    -Dsonar.host.url=$sonar_host \
+                    -Dsonar.login=$sonar_credentials'
+            }
+        }
+
+        stage('JUnit Tests') {
+            steps {
+
+                sh 'mvn test'
             }
         }
     }
