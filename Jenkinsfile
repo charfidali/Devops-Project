@@ -24,20 +24,19 @@ pipeline {
 
         stage('SonarQube Analysis') {
             environment {
-                 scannerHome = tool name: 'SonarQubeScanner'
-                
-            }
+               scannerHome = tool name: 'SonarQubeScanner'
+    }
             steps {
-                    def scannerCmd = "${scannerHome}/bin/sonar-scanner"
-                    -Dsonar.projectName=Devops \
-                    -Dsonarsources=src/ \
-                    
-                    
-                    // Run the SonarQube analysis
-                    sh "${scannerCmd}"
-                
-            }
+               script {
+                  def scannerCmd = "${scannerHome}/bin/sonar-scanner"
+                  def sonarParams = "-Dsonar.projectName=Devops -Dsonar.sources=src"
+            
+                  // Run the SonarQube analysis
+                  sh "${scannerCmd} ${sonarParams}"
         }
+    }
+}
+
 
 
     }
