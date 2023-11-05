@@ -22,12 +22,12 @@ pipeline {
             }
         }
 
-stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
     steps {
         script {
             def scannerHome = tool name: 'sonarqubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
             def scannerCmd = "${scannerHome}/bin/sonar-scanner"
-            def sonarParams = "-Dsonar.projectKey=Devops -Dsonar.projectName=Devops -Dsonar.sources=src"
+            def sonarParams = "-Dsonar.projectKey=Devops -Dsonar.projectName=Devops -Dsonar.sources=src -Dsonar.java.binaries=target/test-classes/tn/esprit/devops_project/services"
 
             // Run the SonarQube analysis with SonarQube environment
             withSonarQubeEnv(credentialsId: 'sonarqubetoken') {
@@ -36,6 +36,7 @@ stage('SonarQube Analysis') {
         }
     }
 }
+
 
 
 
