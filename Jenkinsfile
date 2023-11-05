@@ -36,6 +36,30 @@ pipeline {
         }
     }
 }
+        stage('MAVEN package') {
+    steps {
+        script {
+            sh 'mvn clean -Dmaven.test.skip package'
+        }
+        stash includes: '**', name: 'workspace'
+    }
+}
+        stage('Docker Build and Run') {
+    steps {
+        unstash 'workspace'  // Unstash the workspace
+
+        script {
+            def dockerImage = docker.build("registry.example.com/your-image-name:latest", ".")
+
+            docker.withRegistry('', registryCredential) {
+                dockerImage.push()
+            }
+
+            sh 'docker run -d --name devopsproject_container -p 8082:8082 registry.example.com/devopsProject:latest'
+        }
+    }
+}
+
 
 
 
