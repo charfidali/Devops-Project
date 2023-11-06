@@ -9,9 +9,16 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Compilation') {
+          stage('Compilation') {
             steps {
-                sh 'mvn compile'
+                script {
+                    // Compile code
+                    def mvnHome = tool name: 'Maven', type: 'hudson.tasks.Maven$MavenInstallation'
+                    sh "${mvnHome}/bin/mvn compile"
+
+                    // Package your application as a JAR file
+                    sh "${mvnHome}/bin/mvn package"
+                }
             }
         }
         stage('JUnit Tests') {
