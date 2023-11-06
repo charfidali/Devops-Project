@@ -40,6 +40,11 @@ pipeline {
                 stash includes: '**', name: 'workspace'
             }
         }
+        stage('Debug') {
+    steps {
+        sh 'ls -l $WORKSPACE'
+    }
+}
         stage('Build and Push Docker Image') {
             steps {
                 script {
