@@ -104,7 +104,7 @@
                     <groupId>tn.esprit.spring</groupId>
                     <repositoryId>deploymentRepo</repositoryId>
                     <file>target/DevOps_Project-1.0.war</file>
-                    <url>http://192.168.109.2:8081/repository/maven-releases/</url>
+                    <url>http://192.168.56.2:8081/repository/maven-releases/</url>
                     <options>
                         <name>DevOps_Project</name>
                         <version>1.0</version>
@@ -124,7 +124,7 @@
     <distributionManagement>
         <repository>
             <id>deploymentRepo</id>
-            <url>http://192.168.109.2:8081/repository/maven-releases/</url>
+            <url>http://192.168.56.2:8081/repository/maven-releases/</url>
         </repository>
 
     </distributionManagement>
