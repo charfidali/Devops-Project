@@ -61,10 +61,6 @@ pipeline {
             sh 'docker push charfidali/devopsproject:latest'
         }
     }
-    post {
-         always{
-             sh 'docker logout'
-    }
-} 
+   
     }
 }
