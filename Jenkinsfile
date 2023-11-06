@@ -45,15 +45,15 @@ pipeline {
         sh 'ls -l $WORKSPACE'
     }
 }
-        stage('Build and Push Docker Image') {
-            steps {
-                script {
-                    def dockerImage = docker.build("charfidali/devopsproject:latest", ".")
-                    dockerImage.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
-                        dockerImage.push()
-                    }
-                }
+       stage('Build and Push Docker Image') {
+    steps {
+        script {
+            def dockerImage = docker.build("charfidali/devopsproject:latest", ".")
+            dockerImage.withRegistry([credentialsId: 'DOCKERHUB_CREDENTIALS', url: 'https://registry.hub.docker.com']) {
+                dockerImage.push()
             }
         }
+    }
+}
     }
 } 
