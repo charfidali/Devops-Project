@@ -26,8 +26,9 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
+                def mvn = tool 'Default Maven';
                 withSonarQubeEnv('Local SonarQube') {
-                    sh "mvn sonar:sonar"
+                    sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Devops -Dsonar.projectName='Devops'"
                 }
             }
         }
