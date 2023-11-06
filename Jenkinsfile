@@ -1,12 +1,10 @@
 pipeline {
-  agent {
-          label 'jdk11'
-      }
+  agent any
 
   stages {
     stage('Cleaning the project') {
       steps {
-        sh "mvn -B -DskipTests clean  "
+        sh "mvn  -DskipTests clean  "
       }
     }
 
