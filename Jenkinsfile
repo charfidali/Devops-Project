@@ -2,8 +2,6 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_id')
-        // Declare dockerImage here
-        dockerImage = docker.build("charfidali/devopsProject:latest", ".")
     }
     stages {
         stage('Git Checkout') {
@@ -45,7 +43,7 @@ pipeline {
         stage('Build and Push Docker Image') {
             steps {
                 script {
-                    // Access dockerImage from the environment block
+                    def dockerImage = docker.build("charfidali/devopsProject:latest", ".")
                     dockerImage.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
                         dockerImage.push()
                     }
@@ -53,5 +51,4 @@ pipeline {
             }
         }
     }
-}
-
+} 
