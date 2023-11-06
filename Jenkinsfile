@@ -50,12 +50,12 @@ pipeline {
             sh 'docker.build("charfidali/devopsproject:latest", ".")' 
         }
     }
-    stage('login') {
-        steps {
-            sh'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdim'
-           
-            }
-        }
+   stage('login') {
+    steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+    }
+}
+
     stage('push'){
         steps {
             sh 'docker push charfidali/devopsproject:latest'
