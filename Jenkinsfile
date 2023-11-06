@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
+    }
     stages {
         stage('Git Checkout') {
             steps {
@@ -44,18 +46,15 @@ pipeline {
         stash includes: '**', name: 'workspace'
     }
 }
-        stage('Docker Build and Run') {
-    steps {
-        unstash 'workspace'  // Unstash the workspace
-
-        script {
-            def dockerImage = docker.build("registry.example.com/your-image-name:latest", ".")
-
-            docker.withRegistry('', registryCredential) {
-                dockerImage.push()
+       stage('Build and Push Docker Image') {
+            steps {
+                script {
+                    def dockerImage = docker.build("charfidali/devopsProject:latest", ".")
+                    dockerImage.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
+                        dockerImage.push()
+                    }
+                }
             }
-
-            sh 'docker run -d --name devopsproject_container -p 8082:8082 registry.example.com/devopsProject:latest'
         }
     }
 }
