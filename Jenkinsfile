@@ -49,7 +49,7 @@ pipeline {
     steps {
         script {
             def dockerImage = docker.build("charfidali/devopsproject:latest", ".")
-            docker.withRegistry([credentialsId: 'DOCKERHUB_CREDENTIALS', url: 'https://registry.hub.docker.com']) {
+            docker.withRegistry([url: 'https://registry.hub.docker.com'], 'DOCKERHUB_CREDENTIALS') {
                 dockerImage.push()
             }
         }
