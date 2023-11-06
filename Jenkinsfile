@@ -45,11 +45,14 @@ pipeline {
         sh 'ls -l $WORKSPACE'
     }
 }
-    stage('Build') {
-        steps{
-            sh 'docker.build("charfidali/devopsproject:latest", ".")' 
+   stage('Build') {
+    steps {
+        script {
+            docker.build("charfidali/devopsproject:latest", ".")
         }
     }
+}
+
    stage('login') {
     steps {
         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
