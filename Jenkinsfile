@@ -45,17 +45,25 @@ pipeline {
         sh 'ls -l $WORKSPACE'
     }
 }
-    stage('Build and Push Docker Image') {
-    steps {
-        script {
-            def dockerImage = docker.build("charfidali/devopsproject:latest", ".")
-            withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
-                sh "echo $DOCKERHUB_CREDENTIALS_PSW | sudo su docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                dockerImage.push()
-                sh "docker logout" // Log out after pushing
-            }
+    stage('Build') {
+        steps{
+            sh 'docker.build("charfidali/devopsproject:latest", ".")' 
         }
     }
-}
+    stage('login') {
+        steps {
+            sh'echo $DOCKERHUB_CREDENTIALS_PSW ｜ docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdim'
+           
+            }
+        }
+    stage('push'){
+        steps {
+            sh 'docker push charfidali/devopsproject:latest'
+        }
+    }
+    post {
+         always{
+             sh 'docker logout'
     }
 } 
+    }
