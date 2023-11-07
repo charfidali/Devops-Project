@@ -25,13 +25,14 @@ pipeline {
             }
         }
         stage("build & SonarQube analysis") {
-            agent any
-                steps {
-                    withSonarQubeEnv('http://192.168.56.2:9000') {
-            sh 'mvn clean package sonar:sonar'
-        }
-    }
-}
+            steps {
+			  sh"mvn clean verify sonar:sonar \
+  				-Dsonar.projectKey=devops1 \
+  				-Dsonar.projectName='devops1' \
+  				-Dsonar.host.url=http://http://192.168.56.2:900\
+  				-Dsonar.token=sqb_4a581459a42997b2affde03b45d125b7041de69a"
+		  }
+	  }
        
     }
 }
