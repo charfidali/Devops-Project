@@ -11,25 +11,6 @@ services:
     ports:
       - 3306:3306
     command: mysqld --sql_mode=""
-    networks:
-      #      - meatmi_network_bridge
-      - network
-
-  adminDB:
-    container_name: adminDB_container
-    image: phpmyadmin/phpmyadmin
-    environment:
-      - PMA_ARBITRARY=1
-      - MYSQL_ROOT_PASSWORD=root
-    depends_on:
-      - dev_database
-    ports:
-      - 82:80
-    links:
-      - dev_database:dev_db
-    networks:
-      #      - meatmi_network_bridge
-      - network
 
   spring-app:
     image: ilyeshamdi/spring-app:latest
@@ -38,6 +19,6 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/devops
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_PASSWORD=
     ports:
       - "8082:8082"
