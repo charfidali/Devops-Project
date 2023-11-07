@@ -1,11 +1,13 @@
 pipeline {
 
   agent any   
-
+  environment{
+        DOCKERHUB_CREDENTIALS=credentials('CredentialHub')
+       		}
   stages {
 
 
-   stage('MVN clean install') {
+   stage('Cleaning the project') {
                 steps {
                		 sh 'mvn clean install'
                 }
@@ -13,14 +15,14 @@ pipeline {
 
    	 stage('MVN compile') {
                	steps {
-                			sh 'mvn compile'
+                	sh 'mvn compile'
                 }
 	}
 
 
 	  stage('build'){
           	  steps{
-                	sh 'mvn install package'
+                	sh 'mvn -B -DskipTests package'
             	  }
 	 }
 
@@ -36,7 +38,7 @@ pipeline {
 	  }
 
 	  
-  	  stage('MAVEN deploy') {
+  	  stage('Publish to Nexus') {
 		steps {
 			 script {
             				sh 'mvn deploy -Dmaven.test.skip   '
@@ -45,6 +47,27 @@ pipeline {
   
 	 }
 
+	  stage('Build Docker Image') {
+     		 steps {
+     			   script {
+      				    sh 'docker build -t ilyeshamdi/spring-app .'
+       			   }
+      		}
+    	  }
+
+
+	  stage('Login Dockerhub') {
+     			 steps {
+
+      				 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+      			}
+  	  }
+
+    stage('Push Docker Image') {
+      steps {
+        sh 'docker push ilyeshamdi/spring-app'
+      }
+    }
 
 
 	  
