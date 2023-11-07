@@ -25,6 +25,7 @@ pipeline {
              }
          }
 
+<<<<<<< HEAD
          //sonar
  stage("MVN SONARQUBE") {
          	steps {
@@ -33,3 +34,13 @@ pipeline {
          }
      }
  }
+=======
+        //sonar
+stage("MVN SONARQUBE") {
+        	steps {
+	            sh "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
+	        }
+        }
+    }
+}
+>>>>>>> 25229e1ac42eb9270bcfccc6c767bd40c05b3775
