@@ -45,6 +45,30 @@ pipeline {
         sh 'ls -l $WORKSPACE'
     }
 }
+        stage('upload to nexus'){
+            steps{
+                script{
+                    nexusArtifactUploader artifacts: 
+                        [
+                            [
+                                artifactId: 'DevOps_Project',
+                                classifier: '',
+                                file: 'target/DevOps_Project.jar', 
+                                type: 'jar'
+                            ]
+                        ], 
+                        
+                        credentialsId: 'nexus-auth',
+                        groupId: 'tn.esprit',
+                        nexusUrl: '192.168.33.10:8081', 
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http', 
+                        repository: 'devops-release', 
+                        version: '2.1'
+                }
+            }
+            
+        }
    stage('Build') {
     steps {
         script {
