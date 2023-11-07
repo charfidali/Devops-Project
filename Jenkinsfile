@@ -10,7 +10,7 @@ stages {
 
   	 stage('Cleaning the project') {
                 	steps {
-               			 sh 'mvn clean install'
+               			 sh 'mvn clean'
                		 }
         }
 
