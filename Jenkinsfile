@@ -24,11 +24,14 @@ pipeline {
                 sh "mvn -version"
             }
         }
-       stage('SonarQube Analysis') {
-    def mvn = tool 'M2_HOME';
-    withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=devops1 -Dsonar.projectName='devops1'"
+        stage("build & SonarQube analysis") {
+            agent any
+                steps {
+                    withSonarQubeEnv('http://192.168.56.2:9000') {
+            sh 'mvn clean package sonar:sonar'
+        }
     }
-  }
+}
+       
     }
 }
