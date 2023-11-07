@@ -42,7 +42,7 @@ stages {
 	  
 
 	  
-  	  stage('Publish to Nexus') {
+  	/*  stage('Publish to Nexus') {
 		steps {
 			 script {
             				sh 'mvn deploy -Dmaven.test.skip   '
@@ -50,7 +50,7 @@ stages {
 		}
   
 	 }
-
+*/
 	  stage('Build Docker Image') {
      		 steps {
      			   script {
@@ -66,13 +66,13 @@ stages {
       				 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
       			}
   	  }
-
+/*
     stage('Push Docker Image') {
       steps {
         sh 'docker push ilyeshamdi/spring-app'
       }
     }
-
+*/
 	  stage('DOCKER-COMPOSE'){
           
 			 	steps{
