@@ -26,9 +26,12 @@ pipeline {
         }
         stage('SonarQube Analysis'){
             steps{
-                   withSonarQubeEnv(installationName: 'sonarqube') {
-                        sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                script {
+                    withSonarQubeEnv(installationName: 'sonarserver') {
+                        def mavenHome = tool name: 'Maven', type: 'maven'
+                        sh "${mavenHome}/bin/mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
                     }
+                }
             }
         }
        
