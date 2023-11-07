@@ -1,10 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven' 
+    }
+
     stages {
         stage('Checkout GIT') {
             steps {
-                echo 'pulling...'
+                echo 'Pulling...'
                 git branch: 'product',
                 url: 'https://github.com/yossrb/Devops-Project23-24.git'
             }
@@ -26,14 +30,10 @@ pipeline {
         }
         stage('SonarQube Analysis'){
             steps{
-                script {
-                    withSonarQubeEnv(installationName: 'sonarserver') {
-                        def mavenHome = tool name: 'Maven', type: 'maven'
-                        sh "${mavenHome}/bin/mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
-                    }
+                withSonarQubeEnv(installationName: 'sonarserver') {
+                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 }
             }
         }
-       
     }
 }
