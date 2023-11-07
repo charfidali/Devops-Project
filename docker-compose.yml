@@ -1,13 +1,6 @@
-version: "3.4"
-
-#networks:
-#  meatmi_network_bridge:
-#    external: true
-networks:
-  network:
-    driver: bridge
-
+version: '3'
 services:
+
   dev_database:
     container_name: mysql_container
     image: mysql:5.7
@@ -19,7 +12,7 @@ services:
       - 3306:3306
     command: mysqld --sql_mode=""
     networks:
-#      - meatmi_network_bridge
+      #      - meatmi_network_bridge
       - network
 
   adminDB:
@@ -35,5 +28,16 @@ services:
     links:
       - dev_database:dev_db
     networks:
-#      - meatmi_network_bridge
+      #      - meatmi_network_bridge
       - network
+
+  spring-app:
+    image: yb20/spring-app:latest
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/devops
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8082:8082"

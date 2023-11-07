@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Cleaning the project') {
       steps {
-        sh "mvn clean  "
+        sh "mvn -B -DskipTests clean  "
       }
     }
 
@@ -27,7 +27,7 @@ pipeline {
                 -Dsonar.projectKey=Devops_Project \
                 -Dsonar.projectName='Devops_Project' \
                 -Dsonar.host.url=http://192.168.56.2:9000 \
-                -Dsonar.token=sqp_bd4017627f662b527cd60ffbf17f05d02fea6717"
+                -Dsonar.token=sqp_6290516e6292769a6150d39e049c5fcc8dd5be33"
       }
     }
 

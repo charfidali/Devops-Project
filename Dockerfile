@@ -1,4 +1,7 @@
-FROM openjdk:8-jdk-alpine
-EXPOSE 8082
-ADD target/DevOps_Project-1.0.war DevOps_Project-1.0.war
-ENTRYPOINT ["java","-jar","/DevOps_Project-1.0.war"]
+FROM maven:3.8.2-jdk-8
+
+WORKDIR /spring-app
+COPY . .
+RUN mvn clean install -Dmaven.test.skip
+
+CMD mvn spring-boot:run
