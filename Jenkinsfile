@@ -4,33 +4,44 @@ pipeline {
     stages {
         stage('Checkout GIT') {
             steps {
-                echo 'pulling...'
+                echo 'Pulling...'
                 git branch: 'product',
                 url: 'https://github.com/yossrb/Devops-Project23-24.git'
             }
         }
         stage('Clean') {
             steps {
-                sh "mvn clean"
+                script {
+                    def mavenHome = tool name: 'Maven', type: 'maven'
+                    sh "${mavenHome}/bin/mvn clean"
+                }
             }
         }
         stage('Compile') {
             steps {
-                sh "mvn compile"
+                script {
+                    def mavenHome = tool name: 'Maven', type: 'maven'
+                    sh "${mavenHome}/bin/mvn compile"
+                }
             }
         }
         stage('Testing Maven') {
             steps {
-                sh "mvn -version"
+                script {
+                    def mavenHome = tool name: 'Maven', type: 'maven'
+                    sh "${mavenHome}/bin/mvn -version"
+                }
             }
         }
-        stage('SonarQube Analysis') {
-             steps {
-                withSonarQubeEnv('Local SonarQube') {
-                   sh 'mvn sonar:sonar'
-                        }
+        stage('SonarQube Analysis'){
+            steps{
+                script {
+                    withSonarQubeEnv(installationName: 'sonarserver') {
+                        def mavenHome = tool name: 'Maven', type: 'maven'
+                        sh "${mavenHome}/bin/mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
                     }
                 }
+            }
         }
     }
 }
