@@ -24,12 +24,11 @@ pipeline {
                 sh "mvn -version"
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('Local SonarQube') {
-                    sh "mvn sonar:sonar"
-                }
-            }
-        }
+       stage('SonarQube Analysis') {
+    def mvn = tool 'M2_HOME';
+    withSonarQubeEnv() {
+      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=devops1 -Dsonar.projectName='devops1'"
+    }
+  }
     }
 }
