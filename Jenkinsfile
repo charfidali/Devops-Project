@@ -1,9 +1,11 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven' 
+stage('Testing Maven Version') {
+    steps {
+        sh "${MAVEN_HOME}/bin/mvn -version"
     }
+}
 
     stages {
         stage('Checkout GIT') {
@@ -23,15 +25,16 @@ pipeline {
                 sh "mvn compile"
             }
         }
-        stage('Testing Maven') {
+stage('Testing Maven Version') {
+    steps {
+        sh "${MAVEN_HOME}/bin/mvn -version"
+    }
+}
+ stage('Build and Analyze') {
             steps {
-                sh "mvn -version"
-            }
-        }
-        stage('SonarQube Analysis'){
-            steps{
+                sh "${MAVEN_HOME}/bin/mvn clean compile"
                 withSonarQubeEnv(installationName: 'sonarserver') {
-                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                    sh "${MAVEN_HOME}/bin/mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
                 }
             }
         }
