@@ -37,7 +37,7 @@ class ProductServiceImplTest {
     void TestaddProduct() {
         Product product = new Product();
         Stock stock = new Stock();
-        Long idStock=1L;
+        Long idStock=2L;
 
         Mockito.when(stockRepository.save(stock)).thenReturn(stock);
         Product addNewProd = productService.addProduct(product, idStock);
