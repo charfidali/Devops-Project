@@ -1,16 +1,10 @@
 pipeline {
     agent any
 
-stage('Testing Maven Version') {
-    steps {
-        sh "${MAVEN_HOME}/bin/mvn -version"
-    }
-}
-
     stages {
         stage('Checkout GIT') {
             steps {
-                echo 'Pulling...'
+                echo 'pulling...'
                 git branch: 'product',
                 url: 'https://github.com/yossrb/Devops-Project23-24.git'
             }
@@ -25,18 +19,18 @@ stage('Testing Maven Version') {
                 sh "mvn compile"
             }
         }
-stage('Testing Maven Version') {
-    steps {
-        sh "${MAVEN_HOME}/bin/mvn -version"
-    }
-}
- stage('Build and Analyze') {
+        stage('Testing Maven') {
             steps {
-                sh "${MAVEN_HOME}/bin/mvn clean compile"
-                withSonarQubeEnv(installationName: 'sonarserver') {
-                    sh "${MAVEN_HOME}/bin/mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
-                }
+                sh "mvn -version"
             }
+        }
+        stage('SonarQube Analysis') {
+             steps {
+                withSonarQubeEnv('Local SonarQube') {
+                   sh 'mvn sonar:sonar'
+                        }
+                    }
+                }
         }
     }
 }
