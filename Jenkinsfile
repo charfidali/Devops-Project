@@ -31,13 +31,7 @@ pipeline {
       }
     }
 
-    stage('Publish to Nexus') {
-      steps {
-
-        sh 'mvn deploy  -DskipTests'
-
-      }
-    }
+    
 
     stage('Build Docker Image') {
       steps {
