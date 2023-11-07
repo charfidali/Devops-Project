@@ -1,38 +1,43 @@
-
-version: "3"
-
+version: '3'
 services:
-  mysqldb:
+
+  dev_database:
+    container_name: mysql_container
     image: mysql:5.7
-    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=devops
-    ports:
-      - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
-  app:
-    depends_on:
-      - mysqldb
-    image: ilyeshamdi/spring-app:latest
-    restart: on-failure
+      - ./mount/dev/mysql:/var/lib/mysql
     ports:
-      - "8089:8089"
+      - 3306:3306
+    command: mysqld --sql_mode=""
+    networks:
+      #      - meatmi_network_bridge
+      - network
+
+  adminDB:
+    container_name: adminDB_container
+    image: phpmyadmin/phpmyadmin
     environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/devops?useSSL=false",
-        "spring.datasource.username" : "root",
-        "spring.datasource.password" : "",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-        "spring.jpa.hibernate.ddl-auto" : "update"
-      }'
-    volumes:
-      - .m2:/root/.m2
-    stdin_open: true
-    tty: true
-    
+      - PMA_ARBITRARY=1
+      - MYSQL_ROOT_PASSWORD=root
+    depends_on:
+      - dev_database
+    ports:
+      - 82:80
+    links:
+      - dev_database:dev_db
+    networks:
+      #      - meatmi_network_bridge
+      - network
 
-
-volumes:
-  db:
+  spring-app:
+    image: ilyeshamdi/spring-app:latest
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/devops
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8082:8082"
