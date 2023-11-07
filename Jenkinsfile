@@ -25,7 +25,6 @@ pipeline {
              }
          }
 
-<<<<<<< HEAD
          //sonar
  stage("MVN SONARQUBE") {
          	steps {
@@ -33,14 +32,16 @@ pipeline {
  	        }
          }
      }
+
+     //nexus
+     stage('Nexus'){
+                 steps{
+                       script {
+                         def nexusUsername = 'admin'
+                         def nexusPassword = 'nexus'
+                              sh "mvn deploy --settings /usr/share/maven/conf/settings.xml -Dusername=${nexusUsername} -Dpassword=${nexusPassword}"
+
+                     }
+                 }
+             }
  }
-=======
-        //sonar
-stage("MVN SONARQUBE") {
-        	steps {
-	            sh "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
-	        }
-        }
-    }
-}
->>>>>>> 25229e1ac42eb9270bcfccc6c767bd40c05b3775
