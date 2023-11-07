@@ -24,15 +24,13 @@ pipeline {
                 sh "mvn -version"
             }
         }
-        stage("build & SonarQube analysis") {
-            steps {
-			  sh"mvn clean verify sonar:sonar \
-  				-Dsonar.projectKey=devops1 \
-  				-Dsonar.projectName='devops1' \
-  				-Dsonar.host.url=http://http://192.168.56.2:900\
-  				-Dsonar.token=sqb_4a581459a42997b2affde03b45d125b7041de69a"
-		  }
-	  }
+        stage('SonarQube Analysis'){
+            steps{
+                   withSonarQubeEnv(installationName: 'sonarqube') {
+                        sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                    }
+            }
+        }
        
     }
 }
