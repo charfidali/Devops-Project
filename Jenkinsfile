@@ -20,7 +20,7 @@ pipeline {
 	}
 
 
-	  stage('build'){
+	  stage('MVN build'){
           	  steps{
                 	sh 'mvn -B -DskipTests package'
             	  }
@@ -68,6 +68,16 @@ pipeline {
         sh 'docker push ilyeshamdi/spring-app'
       }
     }
+
+	  stage('DOCKER-COMPOSE'){
+          
+			 	steps{
+             
+					script{
+                				    sh 'docker-compose up -d'
+                		   	      }
+         			      }
+		 }
 
 
 	  
