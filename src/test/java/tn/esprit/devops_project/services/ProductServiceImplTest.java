@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import tn.esprit.devops_project.entities.Product;
 import tn.esprit.devops_project.entities.ProductCategory;
@@ -33,23 +34,14 @@ class ProductServiceImplTest {
     }
 
     @Test
-    void addProduct() {
-        // Créer un produit et un stock pour les tests
+    void TestaddProduct() {
         Product product = new Product();
         Stock stock = new Stock();
-        Long idStock = 1L;
+        Long idStock=1L;
 
-        // Simuler la recherche du stock par ID
-        when(stockRepository.findById(idStock)).thenReturn(java.util.Optional.of(stock));
-
-        // Appeler la méthode à tester
-        Product result = productService.addProduct(product, idStock);
-
-        // Vérifier que le produit a été correctement lié au stock
-        assertEquals(stock, result.getStock());
-
-        // Vérifier que la méthode save a été appelée
-        verify(productRepository, times(1)).save(product);
+        Mockito.when(stockRepository.save(stock)).thenReturn(stock);
+        Product addNewProd = productService.addProduct(product, idStock);
+        assertEquals(stock, addNewProd);
     }
 
     @Test
