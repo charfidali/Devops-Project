@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'M2_HOME' // Utilise l'outil Maven configuré dans Jenkins
+    }
+
     stages {
         stage('Checkout GIT') {
             steps {
@@ -11,35 +15,23 @@ pipeline {
         }
         stage('Clean') {
             steps {
-                script {
-                    def mavenHome = tool name: 'Maven', type: 'maven'
-                    sh "${mavenHome}/bin/mvn clean"
-                }
+                sh "${M2_HOME}/bin/mvn clean"
             }
         }
         stage('Compile') {
             steps {
-                script {
-                    def mavenHome = tool name: 'Maven', type: 'maven'
-                    sh "${mavenHome}/bin/mvn compile"
-                }
+                sh "${M2_HOME}/bin/mvn compile"
             }
         }
         stage('Testing Maven') {
             steps {
-                script {
-                    def mavenHome = tool name: 'Maven', type: 'maven'
-                    sh "${mavenHome}/bin/mvn -version"
-                }
+                sh "${M2_HOME}/bin/mvn -version"
             }
         }
         stage('SonarQube Analysis'){
             steps{
-                script {
-                    withSonarQubeEnv(installationName: 'sonarserver') {
-                        def mavenHome = tool name: 'Maven', type: 'maven'
-                        sh "${mavenHome}/bin/mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
-                    }
+                withSonarQubeEnv(installationName: 'sonarserver') {
+                    sh "${M2_HOME}/bin/mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar"
                 }
             }
         }
