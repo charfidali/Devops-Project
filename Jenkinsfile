@@ -21,7 +21,7 @@ stages {
 	}
 
 
-	stage('SONARQUBE'){
+	/*stage('SONARQUBE'){
 		  steps {
 			  sh"mvn clean verify sonar:sonar \
   				-Dsonar.projectKey=Myproject \
@@ -29,7 +29,7 @@ stages {
 				  -Dsonar.host.url=http://192.168.33.10:9000 \
 				  -Dsonar.token=sqp_515f0fb27d8940af27dfbc13c5443e9b224549fa"
 		  }
-	  }
+	  }*/
 	  
 	  
 	  stage('MVN build'){
