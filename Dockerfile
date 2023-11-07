@@ -1,4 +1,4 @@
-FROM openjdk:11
-COPY target/*.jar monapp.jar
+FROM openjdk:11-jdk-alpine
+COPY target/*.jar app.jar
 EXPOSE 8082
-ENTRYPOINT ["java", "-jar","monapp.jar"]
+ENTRYPOINT ["java", "-jar","app.jar"]
