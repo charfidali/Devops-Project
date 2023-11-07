@@ -25,5 +25,13 @@ pipeline {
             }
         }
 
+        //sonar
+                stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'sonarserver') {
+                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                }
+            }
+        }
     }
 }
