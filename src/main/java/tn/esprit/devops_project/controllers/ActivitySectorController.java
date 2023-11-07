@@ -8,7 +8,10 @@ import tn.esprit.devops_project.services.Iservices.IActivitySector;
 
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/activity")
+@CrossOrigin("*")
 @AllArgsConstructor
 public class ActivitySectorController {
 
