@@ -3,15 +3,16 @@ pipeline {
   agent any   
   environment{
         DOCKERHUB_CREDENTIALS=credentials('CredentialHub')
-       		}
-  stages {
-
-
-   stage('Cleaning the project') {
-                steps {
-               		 sh 'mvn clean install'
-                }
    }
+	
+stages {
+
+
+  	 stage('Cleaning the project') {
+                	steps {
+               			 sh 'mvn clean install'
+               		 }
+        }
 
    	 stage('MVN compile') {
                	steps {
@@ -20,14 +21,7 @@ pipeline {
 	}
 
 
-	  stage('MVN build'){
-          	  steps{
-                	sh 'mvn -B -DskipTests package'
-            	  }
-	 }
-
-
-	  stage('SONARQUBE'){
+	stage('SONARQUBE'){
 		  steps {
 			  sh"mvn clean verify sonar:sonar \
   				-Dsonar.projectKey=Myproject \
@@ -36,6 +30,16 @@ pipeline {
   				-Dsonar.token=sqp_c3d8ed75166a30ad97b84ad3f71903c7af37328a"
 		  }
 	  }
+	  
+	  
+	  stage('MVN build'){
+          	  steps{
+                	sh 'mvn -B -DskipTests package'
+            	  }
+	 }
+
+
+	  
 
 	  
   	  stage('Publish to Nexus') {
