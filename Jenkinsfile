@@ -25,9 +25,9 @@ stages {
 		  steps {
 			  sh"mvn clean verify sonar:sonar \
   				-Dsonar.projectKey=Myproject \
-  				-Dsonar.projectName='Myproject' \
-  				-Dsonar.host.url=http://192.168.33.10:9000 \
-  				-Dsonar.token=sqp_c3d8ed75166a30ad97b84ad3f71903c7af37328a"
+ 				 -Dsonar.projectName='Myproject' \
+				  -Dsonar.host.url=http://192.168.33.10:9000 \
+				  -Dsonar.token=sqp_515f0fb27d8940af27dfbc13c5443e9b224549fa"
 		  }
 	  }
 	  
