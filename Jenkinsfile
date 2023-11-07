@@ -2,11 +2,7 @@ pipeline {
   agent any
 
   stages {
-    stage('Cleaning the project') {
-      steps {
-        sh "mvn -B -DskipTests clean  "
-      }
-    }
+   
 
     stage('Artifact Construction') {
       steps {
