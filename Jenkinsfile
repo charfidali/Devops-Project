@@ -11,12 +11,6 @@ pipeline {
     }
 
 
-
-
-
-
-    
-
     stage('Run Spring && MySQL Containers') {
       steps {
         script {
