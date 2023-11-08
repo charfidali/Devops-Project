@@ -4,12 +4,6 @@ pipeline {
   stages {
 
 
-    stage('Artifact Construction') {
-      steps {
-        sh "mvn -B -DskipTests package "
-      }
-    }
-
 
     stage('Run Spring && MySQL Containers') {
       steps {
@@ -21,5 +15,4 @@ pipeline {
     }
 
   }
-
 }
