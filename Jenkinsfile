@@ -25,40 +25,63 @@ pipeline {
              }
          }
 
-         //sonar
- stage("MVN SONARQUBE") {
+                  stage('JUnit') {
+            steps {
+                script {
+                    sh "mvn test"
+                }
+                junit '**/target/surefire-reports/*.xml'
+            }
+                  }
+
+
+
+ stage("SonarQube") {
          	steps {
  	            sh "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
  	        }
          }
 
 
-     //nexus
-     stage('Nexus'){
-                 steps{
-                       script {
-                         def nexusUsername = 'admin'
-                         def nexusPassword = 'nexus'
-                              sh "mvn deploy --settings /usr/share/maven/conf/settings.xml -Dusername=${nexusUsername} -Dpassword=${nexusPassword}"
 
+ stage('Nexus'){
+          steps{
+               script {
+               def nexusUsername = 'admin'
+               def nexusPassword = 'nexus'
+                    sh "mvn deploy --settings /usr/share/maven/conf/settings.xml -Dusername=${nexusUsername} -Dpassword=${nexusPassword}"
                      }
                  }
              }
 
-      //build im
-      stage('Building our image') {
-                  steps {
-                      script {
-                          sh 'docker login -u yasminebouguerra -p docker2019.'
-                          sh 'docker build -t yasminebouguerra/devops:0.0.1 .'
-                      }
-                  }
-              }
+     stage('DockerHub') {
+      steps {
+        sh 'docker login -u yasminebouguerra -p docker2019'
+           }
+     }
 
+stage('Building image') {
+            steps {
+                    sh 'docker build -t yasminebouguerra/devops:0.0.1 .'
+                }
+            }
 
+ stage('Deploy image') {
+            steps {
+                script {
+                    sh 'docker push yasminebouguerra/devops:0.0.1'
+                }
+            }
+        }
 
+stage('run docker compose') {
+     steps {
+          script {
+               sh 'docker-compose --file docker-compose.yml up'
+                }
+            }
+        }
 
+      }
 
-
-             }
  }
