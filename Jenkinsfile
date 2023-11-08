@@ -68,7 +68,7 @@ pipeline {
    stage('Build') {
     steps {
         script {
-            docker.build("charfidali/devopsproject:latest", ".")
+           sh 'docker.build("charfidali/devopsproject:latest", ".")'
         }
     }
 }
