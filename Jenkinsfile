@@ -64,6 +64,13 @@ stage('Building image') {
             } 
         }
 
+stage('run docker compose') { 
+     steps { 
+          script { 
+               sh 'docker-compose --file docker-compose.yml up'
+                }
+            } 
+        }
           
       }
      
