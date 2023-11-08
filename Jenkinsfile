@@ -32,19 +32,15 @@ pipeline {
                 }
             }
         }
-        stage('MAVEN package') {
+        stage('MAVEN build') {
             steps {
                 script {
-                    sh 'mvn clean -Dmaven.test.skip package'
+                    sh 'mvn clean install -Dmaven.test.skip package'
                 }
                 stash includes: '**', name: 'workspace'
             }
         }
-        stage('Debug') {
-    steps {
-        sh 'ls -l $WORKSPACE'
-    }
-}
+
         stage('upload to nexus'){
             steps{
                 script{
