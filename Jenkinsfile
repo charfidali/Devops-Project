@@ -40,6 +40,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
+        sh'sudo chown -R jenkins mysql'
           sh 'docker build -t yb20/spring-app:yossr .'
         }
       }
@@ -82,6 +83,7 @@ stage("clone frontend"){
           stage('Build Docker Image front') {
                         steps {
                           script {
+                          sh'sudo chown -R jenkins mysql'
                             sh 'docker build -t yb20/front-app:yossr .'
                           }
                         }
