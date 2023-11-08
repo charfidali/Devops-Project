@@ -45,28 +45,6 @@ pipeline {
                  }
              }
 
-                stage('Building our image') { 
-            steps { 
-                script { 
-                    sh 'docker login -u yasminebouguerra -p docker2019.'
-                    sh 'docker build -t yasminebouguerra/devops:0.0.1 .'
-                }
-            } 
-        }
-        stage('Deploy our image') { 
-            steps { 
-                script {
-                    sh 'docker push yasminebouguerra/devops:0.0.1'
-                }
-            } 
-        }
-        
-        stage('run docker compose') { 
-            steps { 
-                script { 
-                    sh 'docker-compose --file docker-compose.yml up'
-                }
-            } 
-        }
+
              }
  }
