@@ -48,15 +48,15 @@ pipeline {
                 stage('Building our image') { 
             steps { 
                 script { 
-                    sh 'docker login -u hamdiselmi -p 11945020.'
-                    sh 'docker build -t hamdiselmi/kaddemf:0.0.1 .'
+                    sh 'docker login -u yasminebouguerra -p docker2019.'
+                    sh 'docker build -t yasminebouguerra/devops:0.0.1 .'
                 }
             } 
         }
         stage('Deploy our image') { 
             steps { 
                 script {
-                    sh 'docker push hamdiselmi/kaddemf:0.0.1'
+                    sh 'docker push yasminebouguerra/devops:0.0.1'
                 }
             } 
         }
