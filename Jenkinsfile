@@ -13,12 +13,12 @@ pipeline {
 
 
 
-   
+
 
     stage('Build Docker Image') {
       steps {
         script {
-          sh 'docker build -t yb20/spring-app .'
+          sh 'docker build -t yb20/spring-app:yossr .'
         }
       }
     }
@@ -32,7 +32,7 @@ pipeline {
 
     stage('Push Docker Image') {
       steps {
-        sh 'docker push yb20/spring-app'
+        sh 'docker push yb20/spring-app:yossr'
       }
     }
 
@@ -40,7 +40,7 @@ pipeline {
       steps {
         script {
           sh 'docker-compose up -d'
-          sh 'docker run --network=host  -d --name Devops_container yb20/spring-app'
+          sh 'docker run --network=host  -d --name Devops_container yb20/spring-app:yossr'
         }
       }
     }

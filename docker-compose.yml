@@ -32,7 +32,7 @@ services:
       - network
 
   spring-app:
-    image: yb20/spring-app:latest
+    image: yb20/spring-app:yossr
     depends_on:
       - mysql
     environment:
