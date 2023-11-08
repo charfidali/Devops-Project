@@ -25,6 +25,15 @@ pipeline {
              }
          }
 
+                  stage('JUnit') {
+            steps {
+                script {
+                    sh "mvn test"
+                }
+                junit '**/target/surefire-reports/*.xml'
+            }
+        
+
          
  stage("SonarQube") {
          	steps {
