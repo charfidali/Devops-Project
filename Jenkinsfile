@@ -56,7 +56,7 @@ stage('Building image') {
                 }
             } 
           
- stage('Deploy our image') { 
+ stage('Deploy image') { 
             steps { 
                 script {
                     sh 'docker push yasminebouguerra/devops:0.0.1'
