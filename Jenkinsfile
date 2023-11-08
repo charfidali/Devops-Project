@@ -85,8 +85,9 @@ pipeline {
         }
     }
     stage('Email Notification'){
+        steps{
         mail bcc: '', body: 'your build is successfully done', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'mohamedali.charfi@esprit.tn'
-    }    
+    }  }  
    
     }
 }
