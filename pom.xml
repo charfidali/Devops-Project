@@ -6,21 +6,16 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.4</version>
+
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>tn.esprit.devops_project</groupId>
     <artifactId>DevOps_Project</artifactId>
-    <version>1.0</version>
-    <packaging>jar</packaging>
+    <version>1.2</version>
     <name>DevOps_Project</name>
     <description>DevOps_Project</description>
     <properties>
         <java.version>11</java.version>
-        <jacoco.version>0.8.6</jacoco.version>
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-        <sonar.language>java</sonar.language>
     </properties>
     <dependencies>
         <dependency>
@@ -57,15 +52,17 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.7.0</version>
         </dependency>
-
-        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -81,7 +78,7 @@
         <repository>
             <id>deploymentRepo</id>
             <name>Nexus Repository</name>
-            <url>http://192.168.56.2:8081/repository/DevOps_Project/</url>
+            <url>http://localhost:8081/repository/DevOps_Project/</url>
         </repository>
     </distributionManagement>
     <build>
@@ -117,20 +114,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
-                <configuration>
-                    <artifactId>Devops_project</artifactId>
-                    <groupId>tn.esprit.devops_project</groupId>
-                    <repositoryId>deploymentRepo</repositoryId>
-                    <file>target/DevOps_Project-1.0.jar</file>
-                    <url>http://localhost:8081/repository/maven-releases/</url>
-
-                </configuration>
-            </plugin>
-
-
         </plugins>
     </build>
 
