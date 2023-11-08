@@ -84,6 +84,9 @@ pipeline {
             sh 'docker push charfidali/devopsproject:latest'
         }
     }
+    stage('Email Notification'){
+        mail bcc: '', body: 'your build is successfully done', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'mohamedali.charfi@esprit.tn'
+    }    
    
     }
 }
