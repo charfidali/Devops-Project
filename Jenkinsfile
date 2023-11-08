@@ -57,10 +57,13 @@ pipeline {
      }
 
 stage('Building image') {
-            steps {
-                    sh 'docker build -t yasminebouguerra/devops:0.0.1 .'
-                }
-            }
+    steps {
+        script {
+            env.DOCKER_BUILDKIT = '1'
+            sh 'docker buildx build -t yasminebouguerra/devops:0.0.1 .'
+        }
+    }
+}
 
  stage('Deploy image') {
             steps {
