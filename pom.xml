@@ -134,7 +134,7 @@
                     <repositoryId>deploymentRepo</repositoryId>
                     <file>target/DevOps_Project-1.0.jar</file>
                     <url>http://localhost:8081/repository/maven-releases/</url>
-                   
+
                 </configuration>
             </plugin>
 
