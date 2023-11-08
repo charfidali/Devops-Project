@@ -49,7 +49,7 @@ pipeline {
                             [
                                 artifactId: 'DevOps_Project',
                                 classifier: '',
-                                file: 'target/*.jar', 
+                                file: 'target/DevOps_Project-2.1.jar', 
                                 type: 'jar'
                             ]
                         ], 
