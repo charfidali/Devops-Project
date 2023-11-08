@@ -66,7 +66,19 @@ pipeline {
         }
       }
     }
+stage("clone frontend"){
+             steps{
+                 script{
+                       checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url:"https://github.com/yossrb/DevopsFront.git"
 
-      
+
+    ]]])
+                 }
+             }
+
+
+
+         }
+
   }
 }
