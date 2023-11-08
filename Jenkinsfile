@@ -34,7 +34,7 @@ pipeline {
     stage('Publish to Nexus') {
       steps {
 
-        sh 'mvn deploy  -DskipTests'
+        sh 'mvn deploy '
 
       }
     }
