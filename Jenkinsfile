@@ -15,26 +15,7 @@ pipeline {
 
 
 
-    stage('Build Docker Image') {
-      steps {
-        script {
-          sh 'docker build -t yb20/spring-app:yossr .'
-        }
-      }
-    }
-
-    stage('login dockerhub') {
-      steps {
-
-        sh 'docker login -u yb20 --password dockerhub'
-      }
-    }
-
-    stage('Push Docker Image') {
-      steps {
-        sh 'docker push yb20/spring-app:yossr'
-      }
-    }
+    
 
     stage('Run Spring && MySQL Containers') {
       steps {
