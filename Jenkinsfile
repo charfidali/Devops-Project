@@ -86,7 +86,7 @@ stage("clone frontend"){
                           }
                         }
                       }
-                       stage('login dockerhub') {
+                       stage('docker login') {
                                          steps {
 
                                            sh 'docker login -u yb20 --password dockerhub'
