@@ -79,6 +79,13 @@ stage("clone frontend"){
 
 
          }
+          stage('Build Docker Image front') {
+                        steps {
+                          script {
+                            sh 'docker build -t yb20/front-app:yossr .'
+                          }
+                        }
+                      }
 
   }
 }
