@@ -10,8 +10,6 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/activity")
-@CrossOrigin("*")
 @AllArgsConstructor
 public class ActivitySectorController {
 
