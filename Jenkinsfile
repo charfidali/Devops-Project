@@ -25,38 +25,46 @@ pipeline {
              }
          }
 
-         //sonar
- stage("MVN SONARQUBE") {
+         
+ stage("SonarQube") {
          	steps {
  	            sh "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
  	        }
          }
 
 
-     //nexus
-     stage('Nexus'){
-                 steps{
-                       script {
-                         def nexusUsername = 'admin'
-                         def nexusPassword = 'nexus'
-                              sh "mvn deploy --settings /usr/share/maven/conf/settings.xml -Dusername=${nexusUsername} -Dpassword=${nexusPassword}"
-
+     
+ stage('Nexus'){
+          steps{
+               script {
+               def nexusUsername = 'admin'
+               def nexusPassword = 'nexus'
+                    sh "mvn deploy --settings /usr/share/maven/conf/settings.xml -Dusername=${nexusUsername} -Dpassword=${nexusPassword}"
                      }
                  }
              }
 
      stage('DockerHub') {
       steps {
-
         sh 'docker login -u yasminebouguerra -p docker2019'
-      }
-    }
+           }
+     }
 
 stage('Building image') { 
             steps { 
                     sh 'docker build -t yasminebouguerra/devops:0.0.1 .'
                 }
             } 
+          
+ stage('Deploy our image') { 
+            steps { 
+                script {
+                    sh 'docker push yasminebouguerra/devops:0.0.1'
+                }
+            } 
         }
+
+          
+      }
      
  }
