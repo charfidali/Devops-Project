@@ -2,7 +2,34 @@ pipeline {
   agent any
 
   stages {
-    
+    stage('Cleaning the project') {
+      steps {
+        sh "mvn -B -DskipTests clean  "
+      }
+    }
+
+    stage('Artifact Construction') {
+      steps {
+        sh "mvn -B -DskipTests package "
+      }
+    }
+
+    stage('Unit Tests') {
+      steps {
+        sh "mvn test "
+      }
+    }
+
+    stage('Code Quality Check via SonarQube') {
+      steps {
+
+        sh "  mvn clean verify sonar:sonar \
+                -Dsonar.projectKey=Devops_Project \
+                -Dsonar.projectName='Devops_Project' \
+                -Dsonar.host.url=http://192.168.56.2:9000 \
+                -Dsonar.token=sqp_3431e100451d4f4705a76bdac8409888b5838181"
+      }
+    }
 
     stage('Publish to Nexus') {
       steps {
