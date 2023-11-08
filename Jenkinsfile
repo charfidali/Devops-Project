@@ -45,10 +45,15 @@ pipeline {
                  }
              }
 
+     stage('DockerHub') {
+      steps {
+
+        sh 'docker login -u yasminebouguerra -p docker2019'
+      }
+    }
+
 stage('Building image') { 
             steps { 
-                script { 
-                    sh 'docker login -u yasminebouguerra -p docker2019.'
                     sh 'docker build -t yasminebouguerra/devops:0.0.1 .'
                 }
             } 
