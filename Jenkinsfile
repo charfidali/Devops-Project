@@ -4,7 +4,7 @@ pipeline {
   stages {
 
 
-    
+
     stage('Run Spring && MySQL Containers') {
       steps {
         script {

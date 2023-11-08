@@ -31,13 +31,4 @@ services:
       #      - meatmi_network_bridge
       - network
 
-  spring-app:
-    image: yb20/spring-app:yossr
-    depends_on:
-      - mysql
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/devops
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-    ports:
-      - "8082:8082"
+ 
