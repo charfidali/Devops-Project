@@ -3,7 +3,7 @@ pipeline {
 
   stages {
 
-stage('Cleaning the project') {
+    stage('Cleaning the project') {
       steps {
         sh "mvn -B -DskipTests clean  "
       }
@@ -31,13 +31,7 @@ stage('Cleaning the project') {
                 -Dsonar.token=sqp_3431e100451d4f4705a76bdac8409888b5838181"
       }
     }
- stage('Publish to Nexus') {
-      steps {
 
-        sh 'mvn deploy  -DskipTests'
-
-      }
-    }
 
 
 
