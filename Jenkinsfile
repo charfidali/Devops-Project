@@ -92,6 +92,11 @@ stage("clone frontend"){
                                            sh 'docker login -u yb20 --password dockerhub'
                                          }
                                        }
+                                        stage('Push Docker Image front') {
+                                                          steps {
+                                                            sh 'docker push yb20/front-app:yossr'
+                                                          }
+                                                        }
 
   }
 }
