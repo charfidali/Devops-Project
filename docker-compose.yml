@@ -1,6 +1,13 @@
-version: '3'
-services:
+version: "3.4"
 
+#networks:
+#  meatmi_network_bridge:
+#    external: true
+networks:
+  network:
+    driver: bridge
+
+services:
   dev_database:
     container_name: mysql_container
     image: mysql:5.7
@@ -30,5 +37,3 @@ services:
     networks:
       #      - meatmi_network_bridge
       - network
-
- 
