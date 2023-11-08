@@ -6,12 +6,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.4</version>
-
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>tn.esprit.devops_project</groupId>
     <artifactId>DevOps_Project</artifactId>
-    <version>1.2</version>
+    <version>1.0</version>
+    <packaging>jar</packaging>
     <name>DevOps_Project</name>
     <description>DevOps_Project</description>
     <properties>
@@ -124,6 +124,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <artifactId>Devops_project</artifactId>
+                    <groupId>tn.esprit.devops_project</groupId>
+                    <repositoryId>deploymentRepo</repositoryId>
+                    <file>target/DevOps_Project-1.0.jar</file>
+                    <url>http://localhost:8081/repository/maven-releases/</url>
+                   
+                </configuration>
             </plugin>
 
 
