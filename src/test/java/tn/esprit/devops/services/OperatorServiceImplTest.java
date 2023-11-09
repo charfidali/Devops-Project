@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OperatorServiceImplTest {
-
+//mockito howa test dynamique w juinit statique
     @InjectMocks
     private OperatorServiceImpl operatorService;
 
