@@ -70,10 +70,12 @@ stage('Building image') {
             }
         }
 
-stage('run docker compose') {
-     steps {
-          script {
-               sh 'docker-compose up -d'
+stage('Run Docker Compose') {
+            steps {
+                script {
+                    dir('.') {
+                        sh 'docker-compose -f docker-compose.yml up -d'
+                    }
                 }
             }
         }
