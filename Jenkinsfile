@@ -79,6 +79,7 @@ stage('Building image') {
                 }
             }
         }
+              }
 
 stage('Run Docker Compose') {
             steps {
