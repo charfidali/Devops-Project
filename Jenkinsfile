@@ -21,7 +21,7 @@ stages {
 	}
 
 
-	/*stage('SONARQUBE'){
+	stage('SONARQUBE'){
 		  steps {
 			  sh"mvn clean verify sonar:sonar \
   				-Dsonar.projectKey=Myproject \
@@ -29,8 +29,7 @@ stages {
 				  -Dsonar.host.url=http://192.168.33.10:9000 \
 				  -Dsonar.token=sqp_515f0fb27d8940af27dfbc13c5443e9b224549fa"
 		  }
-	  }*/
-	  
+	  }	  
 	  
 	  stage('MVN build'){
           	  steps{
@@ -42,7 +41,7 @@ stages {
 	  
 
 	  
-  	/*  stage('Publish to Nexus') {
+  	  stage('Publish to Nexus') {
 		steps {
 			 script {
             				sh 'mvn deploy -Dmaven.test.skip   '
@@ -50,7 +49,7 @@ stages {
 		}
   
 	 }
-*/
+
 	  stage('Build Docker Image') {
      		 steps {
      			   script {
@@ -66,13 +65,13 @@ stages {
       				 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
       			}
   	  }
-/*
+
     stage('Push Docker Image') {
       steps {
         sh 'docker push ilyeshamdi/spring-app'
       }
     }
-*/
+
 	  stage('DOCKER-COMPOSE'){
           
 			 	steps{
