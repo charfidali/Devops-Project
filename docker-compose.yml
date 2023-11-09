@@ -1,0 +1,30 @@
+version: "3.4"
+
+services:
+  database:
+    container_name: mysql_container
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mount/dev/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - my_custom_network
+
+  devops-app:
+    container_name: devops_app_container
+    image: charfidali/devopsproject:latest
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/devops?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+    ports:
+      - 8082:8082
+    networks:
+      - my_custom_network
+
+networks:
+  my_custom_network:
+    driver: bridge
