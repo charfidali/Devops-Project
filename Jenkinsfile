@@ -40,6 +40,13 @@ pipeline {
                 stash includes: '**', name: 'workspace'
             }
         }
+         stage('Run Docker Compose') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
 
         stage('upload to nexus'){
             steps{
