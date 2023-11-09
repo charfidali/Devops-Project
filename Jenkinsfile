@@ -70,16 +70,6 @@ stage('Building image') {
             }
         }
 
-              stages {
-        stage('Vérifier Docker Compose') {
-            steps {
-                script {
-                    def result = sh(script: 'docker-compose --version', returnStdout: true).trim()
-                    echo "Résultat de la commande docker-compose --version : ${result}"
-                }
-            }
-        }
-              }
 
 stage('Run Docker Compose') {
             steps {
