@@ -65,10 +65,25 @@ pipeline {
             }
             
         }
+          stage('Download jar from Nexus') {
+            steps {
+                script {
+                    def projectVersion = '2.1' // Update this version as needed
+                    def nexusUrl = 'http://192.168.33.10:8081'
+                    def groupId = 'tn.esprit'
+                    def artifactId = 'DevOps_Project'
+                    def repository = 'devops-release'
+                    def artifactPath = "${groupId.replace('.', '/')}/${artifactId}/${projectVersion}/${artifactId}-${projectVersion}.jar"
+                    
+                    // Download the artifact from Nexus
+                    sh "curl -O ${nexusUrl}/repository/${repository}/${artifactPath}"
+                }
+            }
+        }
    stage('Build') {
     steps {
         script {
-           docker.build("charfidali/devopsproject:latest", ".")
+           docker.build("charfidali/devopsproject:latest", "-f Dockerfile-nexus .")
         }
     }
 }
