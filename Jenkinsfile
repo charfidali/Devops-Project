@@ -37,7 +37,6 @@ pipeline {
                 script {
                     sh 'mvn clean install -Dmaven.test.skip package'
                 }
-                stash includes: '**', name: 'workspace'
             }
         }
          stage('Run Docker Compose') {
